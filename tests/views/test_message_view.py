@@ -24,6 +24,7 @@ def test_create_message(client):
     data = json.loads(response.data)['data']
     data.pop('id')
     expected = new_message.copy()
+
     assert status == 201
     assert data == expected
     assert sorted(data.keys()) == sorted(expected.keys())
@@ -31,5 +32,11 @@ def test_create_message(client):
 
 def test_get_lead_by_message(client):
     """pega o lead e as messagens e verifica o status"""
+
+    new_message = new_message_json()
     response = client.get(f'/message/{1}')
+    result = json.loads(response.data).get('data')['id']
+    expected = 1
+
+    assert result == expected
     assert response == 200

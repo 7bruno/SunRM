@@ -5,11 +5,11 @@ from flask_jwt_extended import JWTManager
 from app.services.decode_service import decode_password
 from app.services.encode_service import encode_password
 
-def generated_email(max):
+def email_generator(max):
     return ''.join([random.choice("abcde") for _ in range(max)]) + '@gmail.com'
 
 
-random_email = generated_email(20)
+random_email = email_generator(20)
 
 
 def new_seller_json():
@@ -38,9 +38,9 @@ def test_login_seller(client):
     """loga com o novo seller criado e compara o status"""
     json_data = new_seller_json()
     response = client.post('/login', json=json_data)
-    result = json.loads(response.data)['data'].get('user')['email']
-    expected = json_data['email']
+    result = json.loads(response.data)['data'].get('auth_token')
+    expected = True
 
-    assert expected == result
+    assert expected == result, 'Length should be bigger than 0'
     assert response.status_code == 200
     
