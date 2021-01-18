@@ -1,4 +1,5 @@
 from app.services.encode_service import encode_password
+
 def test_should_return_a_encoded_password():
     example_data={
         'email': 'example@example.com',

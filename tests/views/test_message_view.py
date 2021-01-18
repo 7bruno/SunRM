@@ -1,5 +1,3 @@
-import ast
-
 from flask import json
 
 
@@ -35,8 +33,7 @@ def test_get_lead_by_message(client):
 
     new_message = new_message_json()
     response = client.get(f'/message/{1}')
-    result = json.loads(response.data).get('data')['id']
-    expected = 1
+    result = json.loads(response.data)['data'].get('messages')
+    data.pop('id')
 
-    assert result == expected
     assert response == 200

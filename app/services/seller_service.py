@@ -24,13 +24,7 @@ def login_seller(data):
         return build_api_response(
             HTTPStatus.OK, {
                 'refresh_token':refresh_token,
-                'auth_token': acess_token,
-               
-                'user':{
-                    'name': data['name'],
-                    'email': data['email']
-                }
-
+                'auth_token': acess_token
                 }
             )
 
