@@ -34,6 +34,8 @@ def test_get_lead_by_message(client):
     new_message = new_message_json()
     response = client.get(f'/message/{1}')
     result = json.loads(response.data)['data'].get('messages')
-    data.pop('id')
-
+    especific_message = [message for message in result if message['id'] == 1][0]
+    expected = list(filter(lambda message: message.get('lead_id') == especific_message['lead_id'], result))
+    
+    assert len(result) == len(expected)
     assert response == 200
