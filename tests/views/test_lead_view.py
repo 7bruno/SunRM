@@ -5,9 +5,9 @@ def new_lead_json():
     """retorna um json do novo lead"""
 
     return {
-        "name": "chritopher william buscoski sanocki",
-        "email": "christopher@gmail.com",
-        "phone": 40028922,
+        "name": "[TEST] Example Name",
+        "email": "example_email@gmail.com",
+        "phone": 00000000,
         "hsp_id": 1,
         "energy_id": 1,
     }
@@ -18,7 +18,7 @@ def test_create_new_lead(client):
 
     new_lead = new_lead_json()
 
-    response = client.post('/lead', json=new_lead)
+    # response = client.post('/lead', json=new_lead)
 
     # data = json.loads(response.data)
     # status = response.status_code

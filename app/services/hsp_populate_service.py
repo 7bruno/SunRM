@@ -1,5 +1,25 @@
 import csv
+
 import psycopg2
+from environs import Env
+
+
+def init_connection():
+    """inicia uma conneção apartir do database no .env"""
+
+    env = Env()
+    env.read_env()
+
+    dbname = env.str('DATABASE_NAME')
+    user = env.str('DATABASE_USER')
+    password = env.str('DATABASE_PASSWORD')
+
+    conn = psycopg2.connect(
+        f"""dbname={dbname} user={user} password={password} host=localhost port=5432"""
+    )
+
+    cursor = conn.cursor()
+    return conn, cursor
 
 
 def hsp_readers(csv_string_name):
@@ -22,18 +42,16 @@ def hsp_readers(csv_string_name):
 
 
 def populating_hsp():
-    conn = psycopg2.connect(
-        "dbname=dendondkajlok4 user=ifpozknijmezbg password=2950811ec54934a8793f053c3b1d8851c517f66b6a7f67c64c7f1d168c80050b host=ec2-107-22-14-60.compute-1.amazonaws.com port=5432")
 
-    cur = conn.cursor()
+    conn, cursor = init_connection()
 
     for data in hsp_readers("hsp_data_2017.csv"):
 
-        cur.execute("INSERT INTO hsp (city,uf,md_anual,lon,lat) VALUES(%s,%s,%s,%s,%s)",
-                    (data["city"], data["uf"], data["md_anual"], data["lon"], data["lat"]))
+        cursor.execute("INSERT INTO hsp (city,uf,md_anual,lon,lat) VALUES(%s,%s,%s,%s,%s)",
+                       (data["city"], data["uf"], data["md_anual"], data["lon"], data["lat"]))
 
         conn.commit()
-    cur.close()
+    cursor.close()
     conn.close()
 
 

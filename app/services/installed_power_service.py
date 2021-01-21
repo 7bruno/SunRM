@@ -1,7 +1,7 @@
-from app.models import Hsp, Energy_data
+from app.models import EnergyData, Hsp
 
 
-def installed_power(db_hsp: Hsp, energy_data: Energy_data):
+def installed_power(db_hsp: Hsp, energy_data: EnergyData):
 
     hsp = db_hsp.md_anual/1000
     diary_energy = energy_data.month_energy/30

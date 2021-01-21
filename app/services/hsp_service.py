@@ -1,27 +1,34 @@
 from http import HTTPStatus
 
-from app.models.hsp_model import Hsp, hsps_schema
-from sqlalchemy.exc import IntegrityError
-
-from .http import build_api_response
+from ..models import Hsp
+from ..schema import hsps_schema
+from .http_service import build_api_response, build_response_message
+from .uf_dict_service import ufs_dict
 
 
 def get_uf_or_all(**kwargs):
-    try:
-        uf = kwargs["uf"].upper()
-        ufs = Hsp.query.filter_by(uf=uf).all()
-        if not len(ufs):
-            return build_api_response(HTTPStatus.BAD_REQUEST)
+    request_uf = kwargs.get("uf")
+    if request_uf and request_uf.isupper():
+        return "Not found", HTTPStatus.NOT_FOUND
 
-        return build_api_response(HTTPStatus.OK, {
-            "data": hsps_schema.dump(ufs)})
-        
-    except:
-        uf_query = Hsp.query.order_by(Hsp.uf).all()
-        uf_schema = hsps_schema.dump(uf_query)
-        uf_list = [uf.get("uf") for uf in uf_schema]
-        uf_filtred = list(set(uf_list))
-        
-        return build_api_response(HTTPStatus.OK, {"uf": uf_filtred})
-        
-        
+    try:
+
+        if request_uf:
+            uf = ufs_dict[request_uf]
+            ufs = Hsp.query.filter_by(uf=uf).all()
+            if not len(ufs):
+                return build_api_response(HTTPStatus.BAD_REQUEST)
+
+            return build_api_response(HTTPStatus.OK, {
+                "data": hsps_schema.dump(ufs)})
+
+        else:
+            uf_list = list(ufs_dict.keys())
+
+            return build_api_response(HTTPStatus.OK, {"uf": uf_list})
+
+    except Exception as error:
+        print(error)
+        return build_api_response(HTTPStatus.INTERNAL_SERVER_ERROR, {
+            "info": "Internal server error"
+        })
