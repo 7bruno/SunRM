@@ -7,29 +7,29 @@ HSP_JSON = {"uf": [
     "DISTRITO FEDERAL",
     "MINAS GERAIS",
     "ALAGOAS",
-    "PARAÍBA",
-    "MARANHÃO",
-    "AMAPÁ",
-    "PERNAMBUCO",
+    "PARAIBA",
+    "MARANHAO",
+    "AMAPA",
+    "PERNANBUCO",
     "RORAIMA",
-    "CEARÁ",
-    "PARANÁ",
-    "RONDÔNIA",
+    "CEARA",
+    "PARANA",
+    "RONDONIA",
     "ACRE",
     "RIO GRANDE DO NORTE",
     "RIO DE JANEIRO",
     "SERGIPE",
-    "PIAUÍ",
+    "PIAUI",
     "SANTA CATARINA",
-    "SÃO PAULO",
-    "GOIÁS",
+    "SAO PAULO",
+    "GOIAS",
     "AMAZONAS",
     "MATO GROSSO DO SUL",
     "BAHIA",
     "TOCANTINS",
-    "ESPÍRITO SANTO",
+    "ESPIRITO SANTO",
     "RIO GRANDE DO SUL",
-    "PARÁ"
+    "PARA"
 ]}
 
 
@@ -37,10 +37,11 @@ def test_get_all_cities_in_database(client):
 
     response = client.get('/hsp')
 
-    hsp_result = json.loads(response.data)
-
+    hsp_result =  json.loads(response.data)
+    remove_spaces = map(lambda city: city.upper().replace(' ', '').replace('-', ' '), hsp_result['uf'])
+    
     assert 'uf' in hsp_result
-    assert sorted(hsp_result['uf']) == sorted(HSP_JSON['uf'])
+    assert sorted(remove_spaces) == sorted(HSP_JSON['uf'])
 
 
 def test_get_one_city_in_database(client):
