@@ -90,3 +90,15 @@ def test_dict_of_get_lead_and_message_with_status_200(client):
     assert sorted(message_result.keys()) == sorted(message_expected.keys())
     assert sorted([str(i) for i in message_result.values()]) == sorted(
         [str(i) for i in message_expected.values()])
+
+#>       assert sorted([str(i) for i in lead_result.values()]) == sorted(
+#            [str(i) for i in lead_expected.values()])
+#E       AssertionError: assert ['1', '1', '40028942244r3', 'christophe4rr', 'christophe4rr@exemple.com'] == ['1', '2', '40028942244r3', 'christophe4rr', 'christophe4rr@exemple.com']
+#E         At index 1 diff: '1' != '2'
+#E         Full diff:
+#E         - ['1', '2', '40028942244r3', 'christophe4rr', 'christophe4rr@exemple.com']
+#E         ?        ^
+#E         + ['1', '1', '40028942244r3', 'christophe4rr', 'christophe4rr@exemple.com']
+#E         ?        ^
+
+#tests/views/test_message_view.py:86: AssertionError

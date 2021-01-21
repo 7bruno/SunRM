@@ -8,20 +8,21 @@ def generate_fiels(max):
         ]) + '@gmail.com', 
         ''.join([random.choice('abcdefghijqlimnopkrstuvxwyz') for _ in range(max)
         ]),
-        ''.join([random.choice(1234567890) for _ in range(max)
+        ''.join([random.choice('1234567890') for _ in range(max)
         ])
     )
 
 
 def new_lead_json():
     """retorna um json do novo lead"""
-
+    email, name, phone = generate_fiels(10)
     return {
-        "name": "[TEST] Example Name",
-        "email": "example_email@gmail.com",
-        "phone": 00000000,
+        "name": '[test]' + name,
+        "email": email,
+        "phone": int(phone),
         "hsp_id": 1,
-        "energy_id": 1,
+        "month_energy": 1,
+        "month_value": 120
     }
 
 ##name, email, phone
@@ -36,7 +37,5 @@ def test_create_new_lead(client):
     status = response.status_code
 
     expected = {"data": new_lead}
-    print(generate_fiels)
-    
     assert data == expected
     assert status == 201
