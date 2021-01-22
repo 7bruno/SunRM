@@ -12,21 +12,21 @@ Development: https://capstone-q3-sunrn.herokuapp.com
 
 ## GET /hsp
 
-get all ufs in the database
+get all ufs strings
 
 ### Response Return
 
 ```json
 {
-  "uf": ["LIST OF ALL CITIES IN THE DATABASE"]
+  "uf": ["LIST OF ALL UF STRINGS IN THE DATABASE"]
 }
 ```
 
-## GET /hsp/<your-ufs-name>
+## GET /hsp/uf_string
 
 get all ufs in the database
 
-(/hsp/<pernambuco>)
+(/hsp/pernambuco)
 
 ### Response Return
 
@@ -188,7 +188,7 @@ Authorization: 'Bearer ' + <TOKEN>
 ]
 ```
 
-## GET /lead/<lead_id>
+## GET /lead/lead_id
 
 header
 
@@ -268,7 +268,7 @@ body
 }
 ```
 
-## GET /message/<message_id>
+## GET /message/message_id
 
 get a expecific message
 
