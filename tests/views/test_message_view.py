@@ -48,7 +48,6 @@ def test_dict_of_get_lead_and_message_with_status_200(client):
     message_id = execute_sql_comand_in_database(
         """SELECT id FROM message ORDER BY ID DESC LIMIT 1""")[0][0]
 
-    print(message_id)
     response = client.get(f'/message/{message_id}')
 
     status_result = response.status_code
@@ -56,28 +55,14 @@ def test_dict_of_get_lead_and_message_with_status_200(client):
 
     status_expected = 200
     assert status_result == status_expected
+    print(data_result)
+    message_result = data_result.copy()
 
-    lead_result = data_result['lead'].copy()
-    message_result = data_result['message'].copy()
-
-    print(lead_result, message_result)
-
-    id, energy_id, phone, name, email = execute_sql_comand_in_database(
-        f"""SELECT id, energy_id, phone, name, email FROM lead WHERE lead.id = {lead_result['id']}"""
-    )[0]
-
-    lead_expected = {
-        'id': id,
-        'energy_id': energy_id,
-        'phone': phone,
-        'name': name,
-        'email': email
-    }
 
     id, seller_id, lead_id, message, classification = execute_sql_comand_in_database(
         f"""SELECT id, seller_id, lead_id, message, classification 
         FROM message WHERE message.lead_id = {message_result['lead_id']}"""
-    )[0]
+    )[-1]
 
     message_expected = {
         'id': id,
@@ -86,14 +71,7 @@ def test_dict_of_get_lead_and_message_with_status_200(client):
         'message': message,
         'classification': classification
     }
-
-    print(lead_expected, message_expected)
-
-
-    assert sorted(lead_result.keys()) == sorted(lead_expected.keys())
-    assert sorted([str(i) for i in lead_result.values()]) == sorted(
-        [str(i) for i in lead_expected.values()])
-
+    print(message_expected)
     assert sorted(message_result.keys()) == sorted(message_expected.keys())
     assert sorted([str(i) for i in message_result.values()]) == sorted(
         [str(i) for i in message_expected.values()])
