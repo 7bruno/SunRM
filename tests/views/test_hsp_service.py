@@ -50,5 +50,6 @@ def test_get_one_city_in_database(client):
     response = client.get(f'/hsp/{random_city}')
 
     hsp_result = json.loads(response.data)
-
+    
+    assert 'uf' in hsp_result
     assert random_city.lower() in hsp_result['uf']
