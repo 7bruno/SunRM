@@ -46,15 +46,9 @@ def test_get_all_cities_in_database(client):
 
 def test_get_one_city_in_database(client):
 
-    random_city = HSP_JSON['uf'][random.randint(0, len(HSP_JSON['uf']) -1)]
-
+    random_city = HSP_JSON['uf'][random.randint(0, len(HSP_JSON['uf']) -1)].title().replace(' ', '-')
     response = client.get(f'/hsp/{random_city}')
 
     hsp_result = json.loads(response.data)
 
-    for city in hsp_result['data']:
-
-        for key in ("id", "uf", "city"):
-            assert key in city
-
-        assert city['uf'] == random_city
+    assert random_city.lower() in hsp_result['uf']
