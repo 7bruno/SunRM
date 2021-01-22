@@ -12,7 +12,7 @@ Development: https://capstone-q3-sunrn.herokuapp.com
 
 ## GET /hsp
 
-get all citys in the database
+get all ufs in the database
 
 ### Response Return
 
@@ -22,9 +22,9 @@ get all citys in the database
 }
 ```
 
-## GET /hsp/<your-city-name>
+## GET /hsp/<your-ufs-name>
 
-get all citys in the database
+get all ufs in the database
 
 (/hsp/<pernambuco>)
 
@@ -58,7 +58,7 @@ body to create a simulation of a lead
   "phone": "USER PHONE",
   "month_energy": 150, // USER ENERGY IN THE MONTH
   "month_value": 120, // USER ENERGY COST IN THE MONTH
-  "hsp_id": 1 // HSP ID OF USER LOCALIZATION (use route to get the id /hsp/your-city-name)
+  "hsp_id": 1 // UF ID OF USER LOCALIZATION (use route to get the id /hsp/your-city-name)
 }
 ```
 
